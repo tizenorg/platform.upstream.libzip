@@ -1,0 +1,69 @@
+Index: libzip-0.10/configure.ac
+===================================================================
+--- libzip-0.10.orig/configure.ac	2011-03-18 12:37:29.000000000 +0100
++++ libzip-0.10/configure.ac	2011-03-21 13:46:34.674834029 +0100
+@@ -38,6 +38,35 @@
+     AC_MSG_ERROR([ZLIB version too old, please install at least v1.1.2])
+ fi
+ 
++AC_CACHE_CHECK(for visibility(hidden) attribute,
++        ac_cv_visibility_hidden,
++        [cat > conftest.c <<EOF
++        int foo __attribute__ ((visibility ("hidden"))) = 1;
++EOF
++        ac_cv_visibility_hidden=no
++        if ${CC-cc} -Werror -S conftest.c -o conftest.s >/dev/null 2>&1; then
++            if grep '\.hidden.*foo' conftest.s >/dev/null; then
++                ac_cv_visibility_hidden=yes
++            fi
++        fi
++        rm -f conftest.[cs]
++        ])
++
++    if test "$ac_cv_visibility_hidden" = "yes"; then
++		CFLAGS="$CFLAGS -DHAVE_GCCVISIBILITYPATCH=1 -fvisibility=hidden"
++	fi
++
++
++
++
++
++
++
++
++
++
++
++
+ AC_EXEEXT
+ 
+ AM_PROG_LIBTOOL
+Index: libzip-0.10/lib/zip.h
+===================================================================
+--- libzip-0.10.orig/lib/zip.h	2011-03-04 18:17:43.000000000 +0100
++++ libzip-0.10/lib/zip.h	2011-03-21 13:48:52.466190330 +0100
+@@ -34,14 +34,19 @@
+   IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+ 
+-
+ 
+-#ifndef ZIP_EXTERN
+ #ifdef _WIN32
+-#define ZIP_EXTERN __declspec(dllimport)
++  #ifdef BUILDING_DLL
++    #define ZIP_EXTERN __declspec(dllexport)
++  #else
++    #define ZIP_EXTERN __declspec(dllimport)
++  #endif
+ #else
+-#define ZIP_EXTERN
+-#endif
++  #ifdef HAVE_GCCVISIBILITYPATCH
++    #define ZIP_EXTERN  __attribute__ ((visibility("default")))
++  #else
++    #define ZIP_EXTERN
++  #endif
+ #endif
+ 
+ #ifdef __cplusplus

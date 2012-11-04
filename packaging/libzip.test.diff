@@ -1,0 +1,33 @@
+diff -r 6c57f552da7a regress/open_new_but_exists.test
+--- a/regress/open_new_but_exists.test	Mon Mar 21 14:22:51 2011 +0100
++++ b/regress/open_new_but_exists.test	Mon Mar 21 15:18:46 2011 +0100
+@@ -3,4 +3,4 @@
+ args -e test.zip
+ return 1
+ file test.zip test.zip test.zip
+-stdout opening `test.zip' returned error 10/0
++stdout opening `test.zip' returned error 10
+diff -r 6c57f552da7a regress/open_nonarchive.test
+--- a/regress/open_nonarchive.test	Mon Mar 21 14:22:51 2011 +0100
++++ b/regress/open_nonarchive.test	Mon Mar 21 15:18:46 2011 +0100
+@@ -3,4 +3,4 @@
+ file Makefile.am Makefile.am Makefile.am
+ args Makefile.am
+ return 1
+-stdout opening `Makefile.am' returned error 19/2
++stdout opening `Makefile.am' returned error 19
+diff -r 6c57f552da7a regress/tryopen.c
+--- a/regress/tryopen.c	Mon Mar 21 14:22:51 2011 +0100
++++ b/regress/tryopen.c	Mon Mar 21 15:18:46 2011 +0100
+@@ -90,7 +90,9 @@
+ 	return 0;
+     }
+ 
+-    printf("opening `%s' returned error %d/%d\n",
+-	   fname, ze, errno);
++    printf("opening `%s' returned error %d", fname, ze);
++    if (zip_error_get_sys_type(ze) == ZIP_ET_SYS)
++	printf("/%d", errno);
++    printf("\n");
+     return 1;
+ }

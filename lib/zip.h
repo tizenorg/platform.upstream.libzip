@@ -34,14 +34,19 @@
   IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 
-#ifndef ZIP_EXTERN
 #ifdef _WIN32
-#define ZIP_EXTERN __declspec(dllimport)
+  #ifdef BUILDING_DLL
+    #define ZIP_EXTERN __declspec(dllexport)
+  #else
+    #define ZIP_EXTERN __declspec(dllimport)
+  #endif
 #else
-#define ZIP_EXTERN
-#endif
+  #ifdef HAVE_GCCVISIBILITYPATCH
+    #define ZIP_EXTERN  __attribute__ ((visibility("default")))
+  #else
+    #define ZIP_EXTERN
+  #endif
 #endif
 
 #ifdef __cplusplus

@@ -38,6 +38,35 @@ then
     AC_MSG_ERROR([ZLIB version too old, please install at least v1.1.2])
 fi
 
+AC_CACHE_CHECK(for visibility(hidden) attribute,
+        ac_cv_visibility_hidden,
+        [cat > conftest.c <<EOF
+        int foo __attribute__ ((visibility ("hidden"))) = 1;
+EOF
+        ac_cv_visibility_hidden=no
+        if ${CC-cc} -Werror -S conftest.c -o conftest.s >/dev/null 2>&1; then
+            if grep '\.hidden.*foo' conftest.s >/dev/null; then
+                ac_cv_visibility_hidden=yes
+            fi
+        fi
+        rm -f conftest.[cs]
+        ])
+
+    if test "$ac_cv_visibility_hidden" = "yes"; then
+		CFLAGS="$CFLAGS -DHAVE_GCCVISIBILITYPATCH=1 -fvisibility=hidden"
+	fi
+
+
+
+
+
+
+
+
+
+
+
+
 AC_EXEEXT
 
 AM_PROG_LIBTOOL

@@ -7,13 +7,11 @@ Url:            http://www.nih.at/libzip
 Group:          Development/Libraries/C and C++
 Source:         %{name}-%{version}.tar.bz2
 Patch0:         libzip-0.8.hg20080403-visibility.patch
-#PATCH-FIX-UPSTREAM: for for failing tests by Thomas Klausner
 Patch1:         libzip.test.diff
 Patch2:         libzip-ocloexec.patch
 BuildRequires:  libtool
 BuildRequires:  pkg-config
 BuildRequires:  zlib-devel
-BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 %description
 libzip is a C library for reading, creating, and modifying zip
@@ -59,9 +57,8 @@ make %{?_smp_mflags}
 make %{?_smp_mflags} check VERBOSE=1
 
 %install
-make install DESTDIR=%{buildroot}
+%make_install
 cp lib/zipconf.h %{buildroot}/%{_includedir}/zipconf.h
-rm -f %{buildroot}%{_libdir}/libzip.la
 
 %post  -p /sbin/ldconfig
 

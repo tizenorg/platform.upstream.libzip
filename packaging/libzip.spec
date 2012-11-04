@@ -6,9 +6,6 @@ Summary:        C library for reading, creating, and modifying zip archives
 Url:            http://www.nih.at/libzip
 Group:          Development/Libraries/C and C++
 Source:         %{name}-%{version}.tar.bz2
-Patch0:         libzip-0.8.hg20080403-visibility.patch
-Patch1:         libzip.test.diff
-Patch2:         libzip-ocloexec.patch
 BuildRequires:  libtool
 BuildRequires:  pkg-config
 BuildRequires:  zlib-devel
@@ -44,9 +41,6 @@ archives. This package contains devel files.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2
 
 %build
 autoreconf -fiv

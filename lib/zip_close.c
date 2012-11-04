@@ -44,9 +44,9 @@
 #endif
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <fcntl.h>
 #ifdef _WIN32
 #include <io.h>
-#include <fcntl.h>
 #endif
 
 static int add_data(struct zip *, struct zip_source *, struct zip_dirent *,
@@ -328,7 +328,7 @@ zip_close(struct zip *za)
 	free(temp);
 	if (reopen_on_error) {
 	    /* ignore errors, since we're already in an error case */
-	    za->zp = fopen(za->zn, "rb");
+	    za->zp = fopen(za->zn, "rbe");
 	}
 	return -1;
     }
@@ -610,7 +610,7 @@ _zip_create_temp_output(struct zip *za, FILE **outp)
 
     sprintf(temp, "%s.XXXXXX", za->zn);
 
-    if ((tfd=mkstemp(temp)) == -1) {
+    if ((tfd=mkostemp(temp, O_CLOEXEC)) == -1) {
 	_zip_error_set(&za->error, ZIP_ER_TMPOPEN, errno);
 	free(temp);
 	return NULL;

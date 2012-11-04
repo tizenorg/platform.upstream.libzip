@@ -71,7 +71,7 @@ zip_open(const char *fn, int flags, int *zep)
 	break;
     }
 
-    if ((fp=fopen(fn, "rb")) == NULL) {
+    if ((fp=fopen(fn, "rbe")) == NULL) {
 	set_error(zep, NULL, ZIP_ER_OPEN);
 	return NULL;
     }

@@ -95,7 +95,7 @@ main(int argc, char *argv[])
 
     fail += do_read(z, "cryptok", 0, WHEN_OPEN, ZIP_ER_NOPASSWD, 0);
     zip_set_default_password(z, "crypt");
-    fail += do_read(z, "cryptok", 0, WHEN_NEVER, 0, 0);
+    fail += do_read(z, "cryptok", 0, WHEN_OPEN, 0, 0);
     zip_set_default_password(z, "wrong");
     fail += do_read(z, "cryptok", 0, WHEN_OPEN, ZIP_ER_WRONGPASSWD, 0);
     zip_set_default_password(z, NULL);

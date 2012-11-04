@@ -1,3 +1,4 @@
+AM_CPPFLAGS = -include ${top_srcdir}/config.h
 bin_PROGRAMS=zipcmp zipmerge ziptorrent
 
 zipcmp_CPPFLAGS=-I${top_srcdir}/lib

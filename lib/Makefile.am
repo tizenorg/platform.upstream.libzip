@@ -1,5 +1,5 @@
 libincludedir = ${libdir}/@PACKAGE@/include
-
+AM_CPPFLAGS = -include ${top_srcdir}/config.h
 lib_LTLIBRARIES = libzip.la
 noinst_HEADERS = zipint.h
 include_HEADERS = zip.h

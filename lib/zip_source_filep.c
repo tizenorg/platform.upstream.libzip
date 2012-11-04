@@ -133,7 +133,7 @@ read_file(void *state, void *data, zip_uint64_t len, enum zip_source_cmd cmd)
     switch (cmd) {
     case ZIP_SOURCE_OPEN:
 	if (z->fname) {
-	    if ((z->f=fopen(z->fname, "rb")) == NULL) {
+	    if ((z->f=fopen(z->fname, "rbe")) == NULL) {
 		z->e[0] = ZIP_ER_OPEN;
 		z->e[1] = errno;
 		return -1;

@@ -39,6 +39,7 @@
 #ifndef HAVE_GETOPT
 #include "getopt.h"
 #endif
+#include <unistd.h>
 
 #include "zip.h"
 

@@ -43,7 +43,6 @@
 #endif
 
 #include "zip.h"
-#include "config.h"
 
 #ifndef HAVE_FSEEKO
 #define fseeko(s, o, w)	(fseek((s), (long int)(o), (w)))

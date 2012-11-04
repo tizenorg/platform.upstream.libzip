@@ -1,4 +1,4 @@
-AC_PREREQ(2.57)
+AC_PREREQ([2.68])
 AC_INIT([libzip],[0.10.1],[libzip-discuss@nih.at])
 AC_CONFIG_SRCDIR([lib/zip_add.c])
 AC_CONFIG_HEADERS([config.h])
@@ -7,7 +7,9 @@ AM_INIT_AUTOMAKE
 
 dnl AC_CANONICAL_HOST
 
-AC_PROG_CC
+AC_PROG_CC_STDC
+AC_USE_SYSTEM_EXTENSIONS
+AC_SYS_LARGEFILE
 AM_PROG_CC_C_O
 
 AC_ARG_WITH(zlib,
@@ -69,7 +71,7 @@ EOF
 
 AC_EXEEXT
 
-AM_PROG_LIBTOOL
+LT_INIT
 
 AC_CHECK_FUNCS([_open _snprintf _strcmpi _strdup _stricmp fseeko ftello getopt open snprintf strcasecmp strdup])
 AC_CHECK_FUNCS([mkstemp], [], [AC_LIBOBJ(mkstemp)])

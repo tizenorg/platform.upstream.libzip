@@ -45,7 +45,6 @@ TESTS= \
 	add_from_filep.test \
 	add_from_zip.test \
 	encrypt.test \
-	fread.test \
 	get_comment.test \
 	name_locate.test \
 	open_many_ok.test \
@@ -64,5 +63,5 @@ TESTS= \
 NOTYET= \
 	add_from_file_duplicate.test
 
-AM_CPPFLAGS=-I${top_srcdir}/lib
+AM_CPPFLAGS=-I${top_srcdir}/lib -include ${top_srcdir}/config.h
 LDADD=${top_builddir}/lib/libzip.la

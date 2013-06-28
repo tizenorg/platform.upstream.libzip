@@ -6,6 +6,7 @@ Summary:        C library for reading, creating, and modifying zip archives
 Url:            http://www.nih.at/libzip
 Group:          Development/Libraries/C and C++
 Source:         %{name}-%{version}.tar.bz2
+Source1001: 	libzip.manifest
 BuildRequires:  libtool
 BuildRequires:  pkg-config
 BuildRequires:  zlib-devel
@@ -41,6 +42,7 @@ archives. This package contains devel files.
 
 %prep
 %setup -q
+cp %{SOURCE1001} .
 
 %build
 autoreconf -fiv
@@ -59,6 +61,7 @@ cp lib/zipconf.h %{buildroot}/%{_includedir}/zipconf.h
 %postun -p /sbin/ldconfig
 
 %files util
+%manifest %{name}.manifest
 %defattr(-,root,root)
 %{_bindir}/ziptorrent
 %{_bindir}/zipcmp
@@ -66,10 +69,12 @@ cp lib/zipconf.h %{buildroot}/%{_includedir}/zipconf.h
 %{_mandir}/man1/*.1*
 
 %files
+%manifest %{name}.manifest
 %defattr(-,root,root)
 %{_libdir}/libzip.so.*
 
 %files devel
+%manifest %{name}.manifest
 %defattr(-,root,root)
 %{_libdir}/%{name}.so
 %{_includedir}/zip.h
